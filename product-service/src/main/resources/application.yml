@@ -1,0 +1,29 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: product-service
+
+feign:
+  hystrix:
+    enabled: false
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s
+    instances:
+      currencyClient:
+        baseConfig: default
+
+spring:
+  cache:
+    type: caffeine
+
+caffeine:
+  cache:
+    spec: maximumSize=100,expireAfterWrite=10m
